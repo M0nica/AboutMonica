@@ -1,3 +1,4 @@
 *.pdf
 *.php
 google_analytics_auto.js
+error_log
