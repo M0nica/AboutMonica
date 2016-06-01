@@ -1,3 +1,3 @@
 #QMSS forcedirected
 
-Created force directed graphs in D3 from the edges and nodes of presidential candidates. 
+Created force directed graphs in D3 from the edges and nodes of presidential candidates. Also, conducted some network analysis on the results in Gephi. 
