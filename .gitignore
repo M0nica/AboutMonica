@@ -1,3 +1,5 @@
 *.pdf 
 *.php
 google_analytics_auto.js
+*.json
+*.csv
