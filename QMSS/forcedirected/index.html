@@ -1,0 +1,602 @@
+<!-- 
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI Tabs - Default functionality</title>
+  <style>
+path.link {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.5px;
+}
+circle {
+  fill: #ccc;
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+marker-end{
+  color: red;
+}
+text {
+  fill: #000;
+  font: 10px sans-serif;
+  pointer-events: none;
+}
+</style>
+  <script src="http://d3js.org/d3.v3.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  
+  <script>
+  $(function() {
+    $( "#tabs" ).tabs();
+  
+  $("#trump-content").load("/trump.js", function(response, status, xhr) {
+    if (status == "error") {
+      alert(xhr.status + " " + xhr.statusText);
+    }
+  });
+
+  $("#cruz-content").load("/cruz.js", function(response, status, xhr) {
+    if (status == "error") {
+      alert(xhr.status + " " + xhr.statusText);
+    }
+  });
+
+  $("#sanders-content").load("/sanders.js", function(response, status, xhr) {
+    if (status == "error") {
+      alert(xhr.status + " " + xhr.statusText);
+    }
+  });
+
+  $("#clinton-content").load("/clinton.js", function(response, status, xhr) {
+    if (status == "error") {
+      alert(xhr.status + " " + xhr.statusText);
+    }
+  });
+});
+  </script>
+</head>
+<body>
+ 
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1">Trump</a></li>
+    <li><a href="#tabs-2">Cruz</a></li>
+    <li><a href="#tabs-3">Sanders</a></li>
+     <li><a href="#tabs-4">Clinton</a></li>
+  </ul>
+
+
+  <div id="tabs-1">
+
+ <h1>Trump</h1>
+<div id ="trump-content"></div>
+  </div>
+  <div id="tabs-2">
+   <h1>Cruz</h1>
+   <div id ="cruz-content"></div>
+  </div>
+  <div id="tabs-3">
+  </h1>Sanders</h1>
+  <div id ="sanders-content"></div>
+  
+  </div>
+
+  <div id="tabs-4">
+  </h1>Clinton</h1>
+  <div id ="clinton-content"></div>
+  
+  </div>
+</div>
+ 
+ 
+</body>
+</html> -->
+
+ 
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+.link {
+  stroke: #000;
+}
+.node {
+  stroke: #fff;
+}
+img{width: 250px; height: 250px;}
+a{/*text-decoration: none;*/ color: white;}
+
+
+body{
+  background-color: #3A5FCD;
+  color:white;
+}
+</style>
+<body>
+
+	<h2>View a Force-Directed Graph for Each Candidate</h2>
+  <p>By Monica Powell</p>
+  <ul>
+    <li><a href="/QMSS/forcedirected/all_nodes.html"><img src="all_nodes.png">All Candidates</a></li>
+<li> <a href="/QMSS/forcedirected/trump_network.html"><img src="trump_network.png" class="candidate">Trump</a></li>
+  <li><a href="/QMSS/forcedirected/cruz_network.html"><img src="cruz_network.png" class="candidate">Cruz</a></li>
+  <li><a href="/QMSS/forcedirected/sanders_network.html"><img src="sanders_network.png" class="candidate">Sanders</a></li>
+  <li><a href="/QMSS/forcedirected/clinton_network.html"><img src="clinton_network.png" class="candidate">Clinton</a></li>
+</ul>
+</body>
+</html> 
+<!-- <script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+var width = 8000,
+    height = 8000;
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+var force = d3.layout.force()
+    .size([width, height]);
+d3.csv("edges_all.csv", function(error, links) {
+  if (error) throw error;
+  var nodesByName = {};
+  // Create nodes for each unique source and target.
+  links.forEach(function(link) {
+    link.source = nodeByName(link.source);
+    link.target = nodeByName(link.target);
+  });
+  // Extract the array of nodes from the map by name.
+  var nodes = d3.values(nodesByName);
+  // Create the link lines.
+  var link = svg.selectAll(".link")
+      .data(links)
+    .enter().append("line")
+      .attr("class", "link");
+  // Create the node circles.
+  var node = svg.selectAll(".node")
+      .data(nodes)
+    .enter().append("circle")
+      .attr("class", "node")
+      .attr("r", 4.5)
+      .call(force.drag);
+  // Start the force layout.
+  force
+      .nodes(nodes)
+      .links(links)
+      .on("tick", tick)
+      .start();
+
+      //straight links
+      //attributes are defined for each node
+  function tick() {
+    link.attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+    node.attr("cx", function(d) { return d.x; })
+        .attr("cy", function(d) { return d.y; });
+  }
+  function nodeByName(name) {
+    return nodesByName[name] || (nodesByName[name] = {name: name});
+  }
+});
+</script> -->
+
+<!-- <!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.link {
+  stroke: #000;
+}
+
+.node {
+  stroke: #fff;
+}
+
+</style>
+<body>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+
+var width = 960,
+    height = 500;
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+var force = d3.layout.force()
+    .size([width, height]);
+
+//d3.csv("edges.csv", function(error, links) {
+//these are mention networks
+
+d3.csv("edges_all.csv", function(error, links) {
+  if (error) throw error;
+
+  var nodesByName = {};
+
+  // Create nodes for each unique source and target.
+  links.forEach(function(link) {
+    link.source = nodeByName(link.source);
+    link.target = nodeByName(link.target);
+  });
+
+  // Extract the array of nodes from the map by name.
+  var nodes = d3.values(nodesByName);
+
+  // Create the link lines.
+  var link = svg.selectAll(".link")
+      .data(links)
+    .enter().append("line")
+      .attr("class", "link");
+
+  // Create the node circles.
+  var node = svg.selectAll(".node")
+      .data(nodes)
+    .enter().append("circle")
+      .attr("class", "node")
+      .attr("r", 4.5)
+      .call(force.drag);
+
+  // Start the force layout.
+  force
+      .nodes(nodes)
+      .links(links)
+      .on("tick", tick)
+      .start();
+
+  function tick() {
+    link.attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+
+    node.attr("cx", function(d) { return d.x; })
+        .attr("cy", function(d) { return d.y; });
+  }
+
+  function nodeByName(name) {
+    return nodesByName[name] || (nodesByName[name] = {name: name});
+  }
+});
+
+</script>
+
+</body>
+</html> -->
+<!-- <!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
+
+</style>
+<body>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+
+var width = 960,
+    height = 500;
+
+var color = d3.scale.category20();
+
+var force = d3.layout.force()
+    .charge(-120)
+    .linkDistance(30)
+    .size([width, height]);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+d3.json("miserables.json", function(error, graph) {
+  if (error) throw error;
+
+  force
+      .nodes(graph.nodes)
+      .links(graph.links)
+      .start();
+
+  var link = svg.selectAll(".link")
+      .data(graph.links)
+    .enter().append("line")
+      .attr("class", "link")
+      .style("stroke-width", function(d) { return Math.sqrt(d.value); });
+
+  var node = svg.selectAll(".node")
+      .data(graph.nodes)
+    .enter().append("circle")
+      .attr("class", "node")
+      .attr("r", 5)
+      .style("fill", function(d) { return color(d.group); })
+      .call(force.drag);
+
+  node.append("title")
+      .text(function(d) { return d.name; });
+
+  force.on("tick", function() {
+    link.attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+
+    node.attr("cx", function(d) { return d.x; })
+        .attr("cy", function(d) { return d.y; });
+  });
+});
+
+</script> -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>D3: Removing values from a chart</title>
+		<script src="//d3js.org/d3.v3.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<style type="text/css">
+			/* No style rules here yet */
+			body {
+				background-color: #E4E4E4;
+			}
+			p {
+	    color: #000000;
+	    font-size: 1.5em;
+	}
+
+	svg {
+		padding: 30px;
+	}
+
+		</style>
+	</head>
+	<body>
+			<button>Click on this text to look at the next hour's distribution of tweets.</button>
+			<br>
+			<a href="/clintonvsanders.html">Compare Hillary Clinton to Bernie Sanders.</a>
+			<a href="trumpvcruz.html">Compare Donald Trump to Ted Cruz.</a>
+			<br>
+	<p>Tweets Per Hour by Presidental Candidates</p>
+		<script type="text/javascript">
+			//Width and height
+
+
+			var hourtext = "8:00";
+			var w = 600;
+			var h = 250;
+			var hour = 1;
+			 colors = d3.scale.category20()
+			var dataset =
+			[{ candidate: "Bernie Sanders", value: 630 },
+			{ candidate: "Donald Trump", value: 871},
+			{ candidate: "Hillary Clinton", value: 535 },
+			{ candidate: "Marco Rubio", value: 263 },
+			{ candidate: "Ted Cruz", value: 268 }]
+			;
+
+
+
+
+function getDataSetByHour(hour){
+if (hour == 1){
+//	var datasethour1 =
+ dataset =
+[{ candidate: "Bernie Sanders", value: 630 },
+{ candidate: "Donald Trump", value: 871},
+{ candidate: "Hillary Clinton", value: 535 },
+{ candidate: "Marco Rubio", value: 263 },
+{ candidate: "Ted Cruz", value: 268 }]
+;
+}
+
+else if (hour == 2){
+//var datasethour2 =
+dataset =
+[{ candidate: "Bernie Sanders", value: 364 },
+{ candidate: "Donald Trump", value: 597},
+{ candidate: "Hillary Clinton", value: 464},
+{ candidate: "Marco Rubio", value: 161 },
+{ candidate: "Ted Cruz", value: 178}]
+;
+}
+else if (hour == 3){
+//	var datasethour3 =
+dataset =
+[{ candidate: "Bernie Sanders", value: 861 },
+{ candidate: "Donald Trump", value: 1234},
+{ candidate: "Hillary Clinton", value: 688},
+{ candidate: "Marco Rubio", value: 290},
+{ candidate: "Ted Cruz", value: 394}]
+;
+}
+
+else if (hour == 4){
+//var datasethour4 =
+ dataset =
+[{ candidate: "Bernie Sanders", value: 636 },
+{ candidate: "Donald Trump", value: 1198},
+{ candidate: "Hillary Clinton", value: 619},
+{ candidate: "Marco Rubio", value: 345},
+{ candidate: "Ted Cruz", value: 356}]
+;
+}
+else if (hour == 5 ){
+//	var datasethour5 =
+ dataset =
+[{ candidate: "Bernie Sanders", value: 652 },
+{ candidate: "Donald Trump", value: 1004},
+{ candidate: "Hillary Clinton", value: 582},
+{ candidate: "Marco Rubio", value: 219 },
+{ candidate: "Ted Cruz", value: 297}]
+;
+}
+
+// else if (hour == 6){
+// //var datasethour6 =
+//  dataset =
+// [{ candidate: "Bernie Sanders", value: 3},
+// { candidate: "Donald Trump", value: 8},
+// { candidate: "Hillary Clinton", value: 3},
+// { candidate: "Marco Rubio", value: 3},
+// { candidate: "Ted Cruz", value: 2}]
+// ;
+//
+// }
+
+return dataset;
+}
+
+
+
+			var xScale = d3.scale.ordinal()
+							.domain(d3.range(dataset.length))
+							.rangeRoundBands([0, w], 0.05);
+			var yScale = d3.scale.linear()
+							.domain([0, d3.max(dataset, function(d) { return d.value * 1.5; })])
+							.range([0, h]);
+
+			//Define key function, to be used when binding data
+			var key = function(d) {
+				return d.candidate;
+			};
+
+			//Create SVG element
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
+
+
+			//Create bars
+			svg.selectAll("rect")
+			   .data(dataset, key)		//Bind data with custom key function
+			   .enter()
+			   .append("rect")
+			   .attr("x", function(d, i) {
+			   		return xScale(i);
+			   })
+			   .attr("y", function(d) {
+			   		return h - yScale(d.value);
+			   })
+			   .attr("width", xScale.rangeBand())
+			   .attr("height", function(d) {
+			   		return yScale(d.value);
+			   })
+
+
+			.attr("fill",function(d,i){return colors(i)})
+			//Create labels
+			svg.selectAll("text")
+			   .data(dataset, key)		//Bind data with custom key function
+			   .enter()
+			   .append("text")
+			   .text(function(d) {
+			   		return d.value + " " + d.candidate;
+			   })
+			   .attr("text-anchor", "middle")
+			   .attr("x", function(d, i) {
+			   		return xScale(i) + xScale.rangeBand() / 2;
+			   })
+			   .attr("y", function(d) {
+			   		return h - yScale(d.value) + 14;
+			   })
+			   .attr("font-family", "sans-serif")
+			   .attr("font-size", "11px")
+			   .attr("fill", "white");
+
+
+
+
+
+				 //On click, update with new data
+				 			d3.select("button")
+				 				.on("click", function() {
+
+
+				 					//New values for dataset
+//if(hour < 6){
+if(hour < 5){
+					  hour++;
+					}
+					else  {
+						hour = 1;
+					}
+					getDataSetByHour(hour);
+        //  dataset =
+
+					//	 var key = function(dataset) {
+						//	 return dataset.candidate;
+						 //};
+						 console.log("dataset: " + dataset);
+						 console.log("number: " + hour)
+
+				 					//Update all rects
+									svg.selectAll("rect")
+									   .data(dataset, key)		//Bind data with custom key function
+										   .transition()
+
+									   .attr("y", function(d) {
+									   		return h - yScale(d.value);
+									   })
+
+									   .attr("height", function(d) {
+									   		return yScale(d.value);
+									   })
+
+			.attr("fill",function(d,i){return colors(i)})
+
+				 					//Update all labels
+									svg.selectAll("text")
+									   .data(dataset, key)		//Bind data with custom key function
+									//   .enter()
+									  // .append("text")
+									   .text(function(d) {
+									   		return d.value + " " + d.candidate;
+									   })
+									  // .attr("text-anchor", "middle")
+									   .attr("x", function(d, i) {
+									   		return xScale(i) + xScale.rangeBand() / 2;
+									   })
+									   .attr("y", function(d) {
+									   	//	return h - yScale(d.value) + 14;
+											return h - yScale(d.value) + (d.value /20);
+									   })
+
+
+
+
+
+
+				 				});
+
+
+
+								// svg.append("text")
+								// 		.attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+								// 		.attr("transform", "translate("+ (5/2) +","+(h/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+								// 		.text("Total # of Tweets");
+								//
+								// svg.append("text")
+								// 		.attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+								// 		.attr("transform", "translate("+ (w/2) +","+(h+(20))+")")  // centre below axis
+								// 		.text("Presidental ");
+								//
+								// 		svg.append("text")
+								// 				.attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+								// 				.attr("transform", "translate("+ (w/2) +","+(h-(250))+")")  // centre below axis
+								// 				.text("Frequency of PresidentalTweets per Hour" );
+		</script>
+
+	</body>
+</html> -->

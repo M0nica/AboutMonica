@@ -1,0 +1,2 @@
+[22-Aug-2015 08:04:37 America/Chicago] PHP Parse error:  syntax error, unexpected 'From' (T_STRING) in /home2/mmp2181/public_html/aboutmonica.com/email_form.php on line 98
+[17-Jan-2016 08:08:15 America/Chicago] PHP Parse error:  syntax error, unexpected '"From: About Monica <noreply@a' (T_CONSTANT_ENCAPSED_STRING) in /home2/mmp2181/public_html/aboutmonica.com/email_form.php on line 101

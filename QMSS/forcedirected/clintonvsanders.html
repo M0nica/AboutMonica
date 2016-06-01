@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>D3: Pie layout</title>
+	<script src="//d3js.org/d3.v3.min.js"></script>
+		<style type="text/css">
+			text {
+				font-family: sans-serif;
+
+				    font-size: 10px;
+				fill: white;
+			}
+		</style>
+	</head>
+	<body>
+			<button>Click on this to look at the next hour's tweets.</button>
+			<a href="trumpvcruz.html">Compare Donald Trump to Ted Cruz.</a>
+			<a href="index.html">Compare All Candidates.</a>
+			<br><br>
+		<script type="text/javascript">
+		//var w = 300,                        //width
+	  //  h = 300,                            //height
+	    r = 100,                            //radius
+	    color = d3.scale.category20c();     //builtin range of colors
+
+
+						var hourtext = "8:00";
+					//	var w = 600;
+					var w = 250;
+						var h = 250;
+						var hour = 0;
+						var dataset =
+						[{ candidate: "Bernie Sanders", value: 630 },
+						//{ candidate: "Donald Trump", value: 871},
+						{ candidate: "Hillary Clinton", value: 535 },
+					//	{ candidate: "Marco Rubio", value: 263 },
+					//	{ candidate: "Ted Cruz", value: 268 }]
+				];
+
+
+
+
+			function getDataSetByHour(hour){
+			if (hour == 1){
+			//	var datasethour1 =
+			 dataset =
+			[{ candidate: "Bernie Sanders", value: 630 },
+			{ candidate: "Hillary Clinton", value: 535 },
+			//{ candidate: "Marco Rubio", value: 263 },
+			//{ candidate: "Ted Cruz", value: 268 }]
+		];
+			}
+
+			else if (hour == 2){
+			//var datasethour2 =
+			dataset =
+			[{ candidate: "Bernie Sanders", value: 364 },
+			//{ candidate: "Donald Trump", value: 597},
+			{ candidate: "Hillary Clinton", value: 464},
+			//{ candidate: "Marco Rubio", value: 161 },
+			//{ candidate: "Ted Cruz", value: 178}]
+			];
+			}
+			else if (hour == 3){
+			//	var datasethour3 =
+			dataset =
+			[{ candidate: "Bernie Sanders", value: 861 },
+			//{ candidate: "Donald Trump", value: 1234},
+			{ candidate: "Hillary Clinton", value: 688},
+			//{ candidate: "Marco Rubio", value: 290},
+			//{ candidate: "Ted Cruz", value: 394}]
+			];
+			}
+
+			else if (hour == 4){
+			//var datasethour4 =
+			 dataset =
+			[{ candidate: "Bernie Sanders", value: 636 },
+			//{ candidate: "Donald Trump", value: 1198},
+			{ candidate: "Hillary Clinton", value: 619},
+			//{ candidate: "Marco Rubio", value: 345},
+			//{ candidate: "Ted Cruz", value: 356}]
+			];
+			}
+			else if (hour == 5 ){
+			//	var datasethour5 =
+			 dataset =
+			[{ candidate: "Bernie Sanders", value: 652 },
+			//{ candidate: "Donald Trump", value: 1004},
+			{ candidate: "Hillary Clinton", value: 582},
+			//{ candidate: "Marco Rubio", value: 219 },
+			//{ candidate: "Ted Cruz", value: 297}]
+			];
+			}
+
+			else if (hour == 6){
+			//var datasethour6 =
+			 dataset =
+			[{ candidate: "Bernie Sanders", value: 3},
+			//{ candidate: "Donald Trump", value: 8},
+			{ candidate: "Hillary Clinton", value: 3},
+			//{ candidate: "Marco Rubio", value: 3},
+			//{ candidate: "Ted Cruz", value: 2}]
+			];
+
+			}
+
+			return dataset;
+			}
+
+
+
+
+	var dataset =
+	[{ candidate: "Bernie Sanders", value: 630 },
+	//{ candidate: "Donald Trump", value: 871},
+	{ candidate: "Hillary Clinton", value: 535 },
+//	{ candidate: "Marco Rubio", value: 263 },
+//	{ candidate: "Ted Cruz", value: 268 }]
+];
+
+		var key = function(d) {
+			return d.candidate;
+		};
+
+
+
+
+	d3.select("button")
+		.on("click", function() {
+if(hour < 5){
+hour++;
+}
+
+
+if (hour < 6){
+console.log('hour: ' + hour);
+getDataSetByHour(hour);
+
+	    var vis = d3.select("body")
+	        .append("svg:svg")              //create the SVG element inside the <body>
+	        .data([dataset])                   //associate our data with the document
+	            .attr("width", w)           //set the width and height of our visualization (these will be attributes of the <svg> tag
+	            .attr("height", h)
+	        .append("svg:g")                //make a group to hold our pie chart
+	            .attr("transform", "translate(" + r + "," + r + ")")    //move the center of the pie chart from 0, 0 to radius, radius
+
+	    var arc = d3.svg.arc()              //this will create <path> elements for us using arc data
+	        .outerRadius(r);
+
+	    var pie = d3.layout.pie()           //this will create arc data for us given a list of values
+	        .value(function(d) { 	return d.value });    //we must tell it out to access the value of each element in our data array
+
+	    var arcs = vis.selectAll("g.slice")     //this selects all <g> elements with class slice (there aren't any yet)
+	        .data(pie)                          //associate the generated pie data (an array of arcs, each having startAngle, endAngle and value properties)
+	        .enter()                            //this will create <g> elements for every "extra" data element that should be associated with a selection. The result is creating a <g> for every object in the data array
+	            .append("svg:g")                //create a group to hold each slice (we will have a <path> and a <text> element associated with each slice)
+	                .attr("class", "slice");    //allow us to style things in the slices (like text)
+
+	        arcs.append("svg:path")
+	                .attr("fill", function(d, i) { return color(i); } ) //set the color for each slice to be chosen from the color function defined above
+	                .attr("d", arc);                                    //this creates the actual SVG path using the associated data (pie) with the arc drawing function
+
+	        arcs.append("svg:text")                                     //add a label to each slice
+	                .attr("transform", function(d) {                    //set the label's origin to the center of the arc
+	                //we have to make sure to set these before calling arc.centroid
+	                d.innerRadius = 0;
+	                d.outerRadius = r;
+								//	 var c = arc.centroid(d);
+	                return "translate(" + arc.centroid(d)  +  ")";        //this gives us a pair of coordinates like [50, 50]
+  //return "translate(" + c[0]*1.5 +"," + c[1]*1.5 + ")";
+
+							})
+	            .attr("text-anchor", "middle")
+							                            //center the text on it's origin
+	            .text(function(d, i) { return dataset[i].value + "        " + dataset[i].candidate; });      //get the label from our original data array
+
+	 		//hour++;
+
+		}
+
+		d3.select("body").append("p").text("Above are the Tweet Frequencies for Hour #" + hour);
+		});
+
+/* ------- TEXT LABELS -------*/
+		</script>
+	</body>
+</html>

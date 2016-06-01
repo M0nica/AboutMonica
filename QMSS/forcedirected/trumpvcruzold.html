@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>D3: Removing values from a chart</title>
+		<script src="//d3js.org/d3.v3.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<style type="text/css">
+			/* No style rules here yet */
+			body {
+				background-color: #E4E4E4;
+			}
+			p {
+	    color: #000000;
+	    font-size: 1.5em;
+	}
+
+		</style>
+	</head>
+	<body>
+			<p>Click on this text to look at the next hour's tweets.</p>
+		<!--	<a href="/clintonvsanders.html">Compare Hillary Clinton to Bernie Sanders.</a>-->
+			<a href="trumpvcruz.html">Compare Donald Trump to Ted Cruz.</a>
+			<a href="index.html">Compare All Candidates.</a>
+			<br>
+<!-- <p id="hour">"These tweets are from" + hourtext</p>
+
+		<p id="hour-1">These tweets are from Sun Feb 07 7:18 - 7:59PM</p>
+		<p id="hour-2">These tweets are from Sun Feb 07 8:00 - 8:59PM</p>
+<p id="hour-3">These tweets are from Sun Feb 07 9:00 - 9:59PM</p>
+<p id="hour-4">These tweets are from Sun Feb 07 10:00 - 10:59PM</p>
+<p id="hour-5">These tweets are from Sun Feb 07 11:00 - 11:59PM</p>
+<p id="hour-6">These tweets are from Mon Feb 08 at 12:00AM</p>
+ -->
+<!-- <script type="text/javascript">
+//d3.select("p")
+	$("p").on("click", function(){
+
+ var spans = $('p[id^="hour-"]').hide(),
+	 i = 0;
+
+(function cycle() {
+
+	 spans.eq(i).fadeIn(600)
+					   .delay(1800)*/
+						.delay(2500)
+
+
+					 .fadeOut(600, cycle);
+
+
+	 i = ++i % spans.length;
+
+})() )};
+
+
+</script> -->
+		<script type="text/javascript">
+			//Width and height
+
+
+			var hourtext = "8:00";
+			var w = 600;
+			var h = 250;
+			var hour = 1;
+			var dataset =
+			[
+			{ candidate: "Donald Trump", value: 871},
+
+
+			{ candidate: "Ted Cruz", value: 268 }
+	];
+
+
+			//
+			// var dataset =
+			// [{ candidate: "Bernie Sanders", value: 3146 },
+			// { candidate: "Donald Trump", value: 4912 },
+			// { candidate: "Hillary Clinton", value: 2891 },
+			// { candidate: "Marco Rubio", value: 1281 },
+			// { candidate: "Ted Cruz", value: 1494 }]
+			// ;
+
+
+              // var dataset =
+              // [{ candidate: "Bernie Sanders", value: 229 },
+              // { candidate: "Donald Trump", value: 164 },
+              // { candidate: "Hillary Clinton", value: 150 },
+              // { candidate: "Marco Rubio", value:27 },
+              // { candidate: "Ted Cruz", value:34 }]
+              // ;
+
+function getDataSetByHour(hour){
+if (hour == 1){
+//	var datasethour1 =
+ dataset =
+[{ candidate: "Bernie Sanders", value: 630 },
+{ candidate: "Hillary Clinton", value: 535 },
+{ candidate: "Marco Rubio", value: 263 },
+{ candidate: "Ted Cruz", value: 268 }]
+;
+}
+
+else if (hour == 2){
+//var datasethour2 =
+dataset =
+[//{ candidate: "Bernie Sanders", value: 364 },
+{ candidate: "Donald Trump", value: 597},
+//{ candidate: "Hillary Clinton", value: 464},
+//{ candidate: "Marco Rubio", value: 161 },
+{ candidate: "Ted Cruz", value: 178}]
+;
+}
+else if (hour == 3){
+//	var datasethour3 =
+dataset =
+[//{ candidate: "Bernie Sanders", value: 861 },
+{ candidate: "Donald Trump", value: 1234},
+//{ candidate: "Hillary Clinton", value: 688},
+//{ candidate: "Marco Rubio", value: 290},
+{ candidate: "Ted Cruz", value: 394}]
+;
+}
+
+else if (hour == 4){
+//var datasethour4 =
+ dataset =
+[//{ candidate: "Bernie Sanders", value: 636 },
+{ candidate: "Donald Trump", value: 1198},
+//{ candidate: "Hillary Clinton", value: 619},
+//{ candidate: "Marco Rubio", value: 345},
+{ candidate: "Ted Cruz", value: 356}]
+;
+}
+else if (hour == 5 ){
+//	var datasethour5 =
+ dataset =
+[//{ candidate: "Bernie Sanders", value: 652 },
+{ candidate: "Donald Trump", value: 1004},
+//{ candidate: "Hillary Clinton", value: 582},
+//{ candidate: "Marco Rubio", value: 219 },
+{ candidate: "Ted Cruz", value: 297}]
+;
+}
+
+else if (hour == 6){
+//var datasethour6 =
+ dataset =
+[//{ candidate: "Bernie Sanders", value: 3},
+{ candidate: "Donald Trump", value: 8},
+//{ candidate: "Hillary Clinton", value: 3},
+//{ candidate: "Marco Rubio", value: 3},
+{ candidate: "Ted Cruz", value: 2}]
+;
+
+}
+
+return dataset;
+}
+
+
+
+			var xScale = d3.scale.ordinal()
+							.domain(d3.range(dataset.length))
+							.rangeRoundBands([0, w], 0.05);
+			var yScale = d3.scale.linear()
+							.domain([0, d3.max(dataset, function(d) { return d.value; })])
+							.range([0, h]);
+
+			//Define key function, to be used when binding data
+			var key = function(d) {
+				return d.candidate;
+			};
+
+			//Create SVG element
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
+			//Create bars
+			svg.selectAll("rect")
+			   .data(dataset, key)		//Bind data with custom key function
+			   .enter()
+			   .append("rect")
+			   .attr("x", function(d, i) {
+			   		return xScale(i);
+			   })
+			   .attr("y", function(d) {
+			   		return h - yScale(d.value);
+			   })
+			   .attr("width", xScale.rangeBand())
+			   .attr("height", function(d) {
+			   		return yScale(d.value);
+			   })
+			   .attr("fill", function(d) {
+					return "rgb(0, 0, " + (d.value * 10) + ")";
+			   });
+			//Create labels
+			svg.selectAll("text")
+			   .data(dataset, key)		//Bind data with custom key function
+			   .enter()
+			   .append("text")
+			   .text(function(d) {
+			   		return d.value + " " + d.candidate;
+			   })
+			   .attr("text-anchor", "middle")
+			   .attr("x", function(d, i) {
+			   		return xScale(i) + xScale.rangeBand() / 2;
+			   })
+			   .attr("y", function(d) {
+			   		return h - yScale(d.value) + 14;
+			   })
+			   .attr("font-family", "sans-serif")
+			   .attr("font-size", "11px")
+			   .attr("fill", "white");
+
+	//		 svg.append('text')
+    //  .attr('x', width / 2)
+    //  .attr('y', 20)
+    //  .attr('text-anchor', 'middle')
+    //  .attr('class', 'chart-title')
+    //  .text('Sample Charts');
+
+
+				 //On click, update with new data
+				 			d3.select("p")
+				 				.on("click", function() {
+//d3.select("body").replace("p").text("These tweets are from" + hourtext);
+
+				 					//New values for dataset
+//if(hour < 6){
+	if(hour < 5){
+					  hour++;
+					}
+					else {
+						hour = 1;
+					}
+             getDataSetByHour(hour);
+						 console.log("dataset: " + dataset);
+						 console.log("number: " + hour)
+							//		 dataset =
+		          //     [{ candidate: "Bernie Sanders", value: 229 },
+		          //     { candidate: "Donald Trump", value: 164 },
+		          //     { candidate: "Hillary Clinton", value: 150 },
+		          //     { candidate: "Marco Rubio", value:27 },
+		          //     { candidate: "Ted Cruz", value:34 }]
+		          //     ;
+				 					//Update all rects
+									svg.selectAll("rect")
+									   .data(dataset, key)		//Bind data with custom key function
+										   .transition()
+										// .enter()
+									  // .append("rect")
+									   //.attr("x", function(d, i) {
+									   //		return xScale(i);
+								//	   })
+									   .attr("y", function(d) {
+									   		return h - yScale(d.value);
+									   })
+									//   .attr("width", xScale.rangeBand())
+									   .attr("height", function(d) {
+									   		return yScale(d.value);
+									   })
+									   .attr("fill", function(d) {
+											return "rgb(0, 0, " + (d.value * 10) + ")";
+									   });
+				 					//Update all labels
+									svg.selectAll("text")
+									   .data(dataset, key)		//Bind data with custom key function
+									//   .enter()
+									  // .append("text")
+									   .text(function(d) {
+									   		return d.value + " " + d.candidate;
+									   })
+									  // .attr("text-anchor", "middle")
+									   .attr("x", function(d, i) {
+									   		return xScale(i) + xScale.rangeBand() / 2;
+									   })
+									   .attr("y", function(d) {
+									   	//	return h - yScale(d.value) + 14;
+											return h - yScale(d.value) - 10;
+									   })
+									//   .attr("font-family", "sans-serif")
+									//   .attr("font-size", "11px")
+									   .attr("fill", "black");
+
+
+				 				});
+			// //On click, update with new data
+			// d3.select("p")
+			// 	.on("click", function() {
+			//
+			// 		var dataset =
+			// 	  [{ candidate: "Bernie Sanders", value: 229 },
+			// 	  { candidate: "Donald Trump", value: 164 },
+			// 	  { candidate: "Hillary Clinton", value: 150 },
+			// 	  { candidate: "Marco Rubio", value:27 },
+			// 	  { candidate: "Ted Cruz", value:34 }]
+			// 	  ;
+			// 		//Remove one value from dataset
+			// 		dataset.shift();
+			//
+			// 		//Update scale domains
+			// 		xScale.domain(d3.range(dataset.length));
+			// 		yScale.domain([0, d3.max(dataset, function(d) { return d.value; })]);
+			// 		//Select…
+			// 		var bars = svg.selectAll("rect")
+			// 			.data(dataset, candidate);		//Bind data with custom key function
+			//
+			// 		//Enter…
+			// 		bars.enter()
+			// 			.append("rect")
+			// 			.attr("x", w)
+			// 			.attr("y", function(d) {
+			// 				return h - yScale(d.value);
+			// 			})
+			// 			.attr("width", xScale.rangeBand())
+			// 			.attr("height", function(d) {
+			// 				return yScale(d.value);
+			// 			})
+			// 			.attr("fill", function(d) {
+			// 				return "rgb(0, 0, " + (d.value * 10) + ")";
+			// 			});
+			//
+			// 		//Update…
+			// 		bars.transition()
+			// 			.duration(500)
+			// 			.attr("x", function(d, i) {
+			// 				return xScale(i);
+			// 			})
+			// 			.attr("y", function(d) {
+			// 				return h - yScale(d.value);
+			// 			})
+			// 			.attr("width", xScale.rangeBand())
+			// 			.attr("height", function(d) {
+			// 				return yScale(d.value);
+			// 			});
+			// 		//Exit…
+			// 		bars.exit()
+			// 			.transition()
+			// 			.duration(500)
+			// 			.attr("x", -xScale.rangeBand())  // <-- Exit stage left
+			// 			.remove();
+			// 		//Update all labels
+			// 		//
+			// 		//Exercise: Modify this code to remove the correct label each time!
+			// 		//
+			// 		svg.selectAll("text")
+			// 		   .data(dataset, candidate)		//Bind data with custom key function
+			// 		   .transition()
+			// 		   .duration(500)
+			// 		   .text(function(d) {
+			// 		   		return d.value;
+			// 		   })
+			// 		   .attr("x", function(d, i) {
+			// 				return xScale(i) + xScale.rangeBand() / 2;
+			// 		   })
+			// 		   .attr("y", function(d) {
+			// 				return h - yScale(d.value) + 14;
+			// 		   });
+			// 	});
+
+		</script>
+	</body>
+</html>
+<!--
+<!DOCTYPE html>
+<title>Hello this is a test </title>
+<meta charset="utf-8">
+<style>
+
+text {
+  font: 10px sans-serif;
+}
+
+div.bar {
+           display: inline-block;
+           width: 20px;
+           height: 75px;   /* Gets overriden by D3-assigned height below */
+           margin-right: 2px;
+           background-color: teal;
+           }
+
+</style>
+<body>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+
+
+// var dataset =
+// [{ candidate: "Bernie Sanders", value: 229 },
+// { candidate: "Donald Trump", value: 164 },
+// { candidate: "Hillary Clinton", value: 150 },
+// { candidate: "Marco Rubio", value:27 },
+// { candidate: "Ted Cruz", value:34 }]
+// ;
+
+var dataset = [ 5, 10, 15, 20, 25 ];
+
+//var clinton = 5;
+
+//var clint = 'Clinton';
+d3.select("body").append("p").text("My First D3 Visualization!");
+
+ //var dataset;
+
+//d3.json("tweets.02.07.2016.summary.json", function(json) {
+//   dataset = dataset + json;
+//   console.log(json); //Log output to console
+
+
+//});
+//var dataset = [ 5, 10, 15, 20, 25 ];
+
+//d3.json("tweets.02.07.2016.summary.json", function(err, json) {
+//d3.json("tweetsd3.json", function(err, json) {
+
+d3.select("body").selectAll('div')
+.on('click', function(){
+
+
+//  var dataset = [ 5, 10, 15, 20, 25 ];
+
+
+  svg.selectAll('rect')
+  .data(dataset)
+  .attr("y", function(d){
+    return h * yScale(d);
+  })
+  .attr("height", function(d){
+    return yScale(d);
+  })
+
+})
+
+
+// d3.json(totalCounts, function(err, json) {
+//
+//
+//   var dataset = json;
+// alert("error: " + err);
+// alert("hello");
+//  //   alert(err);
+//   console.log(json); //Log output to console
+//  /* clintonSearch(dataset);*/
+//
+//     for (clint in dataset){
+//         clinton++;
+//     }
+//   bar();
+//
+//     return clinton;
+// });
+
+//d3.select("body").append("p").text("Clinton " + clinton);
+/*
+ function clintonSearch(data) {
+   clinton = 5;
+  if (data.indexOf("clinton") > -1){
+    clinton++;
+   }
+
+   console.log(clinton);
+   return clinton;
+
+}*/
+//d3.select("body").append("p").text("Clinton " + clinton);
+
+
+
+
+
+  function bar(){ d3.select("body").selectAll("div")
+                  .data(dataset)
+                  .enter()
+                  .append("div")
+                  .attr("class", "bar")
+                  .style("height", function(d) {
+                      var barHeight = d * 5;
+                      return barHeight + "px";
+                  });
+                }
+
+
+</script> -->
