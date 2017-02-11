@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+
+body {
+  font: 10px sans-serif;
+  color: #444;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: steelblue;
+}
+
+.x.axis path {
+  display: none;
+}
+
+h1, h3{
+  text-align: center;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  /*background: rgba(0, 0, 0, 0.8);*/
+/*background: rgb(136, 136, 142);*/
+background:  #444;
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color:  #444;
+  /*color: rgb(136, 136, 142);*/
+  /*color: rgba(0, 0, 0, 0.8);*/
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+.style("fill", function(d) {
+       return quantize(rateById.get(d.id));
+     })
+
+
+
+/* make svg responsive */
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%; /* aspect ratio */
+    vertical-align: top;
+    overflow: hidden;
+}
+.svg-content-responsive {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    left: 0;
+}
+
+</style>
+<body>
+
+<h1>New York City School Segregation Continues in 2016</h1>
+<p>"The New York City Department of Education (DOE) is the largest school district in the US,
+   serving 1.1 million students in over 1,800 schools." (Source: <a href="http://schools.nyc.gov/AboutUs/default.htm">
+     NYC Department of Education</a>). A look at student enrollment during the 2015-2016 school year reveals that
+     the largest school district in the United States, remains largely segregated by race. Publically funded independent
+     charter schools are 55% Black and only 4% White, while private schools are just 11% Black and predominately White (at 65%). While Black and Hispanic students only account for 24% of private school enrollment and 50% of traditional public schools, Black and Hispanic students compromise over 75% of enrollement in alternative, special education and charter schools.  </p>
+  <h3>NYC Racial Demographics by Type of School (2015-2016 School Year)</h3>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="d3-tip.js"></script>
+<!-- library to format numbers as percentages -->
+<script src="https://d3js.org/d3-format.v1.min.js"></script>
+<script>
+
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var x0 = d3.scale.ordinal()
+    .rangeRoundBands([0, width], .1);
+
+var x1 = d3.scale.ordinal();
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+/*var color = d3.scale.ordinal()
+    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);*/
+
+    var color = d3.scale.ordinal()
+        .range([  "#1b9e77", "#d95f02", "#7570b3", "rgb(173, 0, 26)", "#66a61e"]);
+
+
+var xAxis = d3.svg.axis()
+    .scale(x0)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .tickFormat(d3.format(".0%"));
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+d3.csv("15-16-demosbytype.csv", function(error, data) {
+  if (error) throw error;
+
+  var ageNames = d3.keys(data[0]).filter(function(key) { return key !== "District"; });
+
+
+
+  data.forEach(function(d) {
+    d.students = ageNames.map(function(name) { return {name: name, value: +d[name]}; });
+  });
+
+  x0.domain(data.map(function(d) { return d.District; }));
+  x1.domain(ageNames).rangeRoundBands([0, x0.rangeBand()]);
+  y.domain([0, d3.max(data, function(d) { return d3.max(d.students, function(d) { return d.value; }); })]);
+ //y.domain[0,100];
+
+ var format = d3.format(".0%");
+
+
+var tip = d3.tip()
+      .attr('class', 'd3-tip')
+      .offset([-10, 0])
+      .html(function(d) {
+        return "<strong>" + d.name + "</strong> <span style='color:white'>" + format(d.value) + "</span>";
+    })
+
+svg.call(tip);
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Student Enrollment");
+
+  var District = svg.selectAll(".District")
+      .data(data)
+    .enter().append("g")
+      .attr("class", "District")
+      .attr("transform", function(d) { return "translate(" + x0(d.District) + ",0)"; });
+
+  District.selectAll("rect")
+      .data(function(d) { return d.students; })
+    .enter().append("rect")
+      .attr("width", x1.rangeBand())
+      .attr("x", function(d) { return x1(d.name); })
+      .attr("y", function(d) { return y(d.value); })
+      .attr("height", function(d) { return height - y(d.value); })
+      .style("fill", function(d) { return color(d.name); })
+      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide);
+
+  var legend = svg.selectAll(".legend")
+      .data(ageNames.slice().reverse())
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  legend.append("rect")
+      .attr("x", width - 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", color);
+
+  legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d; });
+
+      d3.select("div#chartId")
+     .append("div")
+     .classed("svg-container", true) //container class to make it responsive
+     .append("svg")
+     //responsive SVG needs these 2 attributes and no width and height attr
+     .attr("preserveAspectRatio", "xMinYMin meet")
+     .attr("viewBox", "0 0 600 400")
+     //class to make it responsive
+     .classed("svg-content-responsive", true); 
+
+});
+
+
+</script>
+<p>Source: NYC Department of Education and New York State Education Department.</p>

@@ -1,5 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:400,100,300,700,400italic,700italic,900);
 @import url(http://fonts.googleapis.com/css?family=Nunito:400,300,700);
+@import url(https://fonts.googleapis.com/css?family=Berkshire+Swash);
+@import url(https://fonts.googleapis.com/css?family=Kaushan+Script);
 
 * {box-sizing: border-box;}
 body {width: 100%; font: 16px/1.5 "Avenir Next", Avenir, 'Lato', 'Nunito', "Helvetica Neue", Helvetica, Arial, sans-serif;"Avenir Next", Avenir, "Helvetica Neue", Helvetica, Arial, sans-serif;}
@@ -9,24 +11,30 @@ font-family: "Avenir Next", Avenir, 'Lato', 'Nunito', "Helvetica Neue", Helvetic
 }
 /*main heading section*/
 #main {/*background-image: url("../images/barnardgates.jpg");*/
+background-image: url("../images/back-pattern.png");
 background-color: #f0f6f8;
 /*padding: 5px;*/
 padding: 1em;
 
 }
 
+#hi-greeting, .cursive{
+  font-family: 'Berkshire Swash', cursive; color: #464e5d;
+
+/*font-family: 'Kaushan Script', cursive; color: #464e5d;*/}
+
 #greeting, #headshot-monica {visibility: hidden;}
 
-.
+
 
 
 #nav-mobile {display: none; }
 /*
 * Logo
-*/ 
+*/
 .logo a {
-    color: #0e8e8c; 
-    text-decoration: none; 
+    color: #0e8e8c;
+    text-decoration: none;
     line-height: 20px;
 left: 2em;}
 .logo a:hover {color: #444;}
@@ -46,7 +54,7 @@ ul.mainMenu li a:hover {color: #0e8e8c;
     transition: color .12s ease-in-out;
 }
 
-ul.mainMenu .social li a {font-size: 13px; color: #0e8e8c; text-decoration: none; 
+ul.mainMenu .social li a {font-size: 13px; color: #0e8e8c; text-decoration: none;
    }
 ul.mainMenu .social li a:hover {color: #444;
     -webkit-transition: color .12s ease-in-out;
@@ -59,15 +67,15 @@ ul.mainMenu .social li a:hover {color: #444;
 
 
 header nav, contactheader nav, wwmheader nav {
-    width: 100%; 
-    height: auto; 
+    width: 100%;
+    height: auto;
     float: left;
-    margin: 0;  
-    padding:15px 0 20px; 
+    margin: 0;
+    padding:15px 0 20px;
     background: #FDFDFD;
     /*border-top: 4px solid #37b7b5;*/
     border-bottom: 3px solid #37b7b5;
-    position: fixed; 
+    position: fixed;
     z-index: 7;
     box-shadow: 0 1px 2px 0 rgba(0,0,0,.3);
     -moz-box-shadow: 0 1px 2px 0 rgba(0,0,0,.3);
@@ -119,7 +127,7 @@ a.anchor {
 }
 
 #main {width: 100%;}
-#main img{height: 15em; /*height: 25em; border-radius: 15px;*/ /*30px;*/}
+#main img{height: 12em; /*height: 25em; border-radius: 15px;*/ /*30px;*/}
 /*#main a {color: background-color: #f06d24;
 border-color: #f06d24;}/*
 
@@ -132,7 +140,7 @@ border-color: #f06d24;}
 
 
 */
-.portfolio-row { /*padding-bottom: 2em;*/      background-color: #f0f6f8;   padding: 2em;     margin-bottom: 1.25em;     border-radius: 4px;}
+.portfolio-row { /*padding-bottom: 2em;*/         background-image: url("../images/back-pattern.png"); background-color: #f0f6f8;   padding: 2em;     margin-bottom: 1.25em;     border-radius: 4px;}
 
 .website-img {/*height: 200px;*/ width: 100%;}
 nav h3 {padding-top: 0; margin-top: 0; color: #333;}
@@ -149,12 +157,12 @@ nav h3 {padding-top: 0; margin-top: 0; color: #333;}
     color: white;
     	z-index: 4;
     	/*background-color:#0e8e8c;*/
-    	} 
-    	
+    	}
+
     	#featured-in, .featured{
 width: 100%;
 text-align: center;}
- 
+
  .full-width-container {
 width: 100%;
 max-width: 100%;
@@ -174,6 +182,9 @@ div#skills-style.container {background-color: #33C3F0;}
 
 #skills-style{ /*background-color: #33C3F0;*/
         background-color: #A8C7D2;
+        background-image: url("../images/p2.png");
+
+
 /*ffff*/
 	padding: 1em;
     bottom-margin: 1em;
@@ -206,13 +217,22 @@ ul.tech_skills {
 }
 
 .tech_skills li {
-    display: inline;
+    display: inline-flex;
     color: #464E5D;
     background-color: #F0F6F8;
-    border-radius: 10%;
+    /*border-radius: 10%;*/
 
-    padding: .5em;
+
+    /*padding: .5em;*/
     margin: .25em;
+}
+/* used in tech skills section*/
+li.button:hover, ul.tech_skills li.button:hover{
+    background-color: #F0F6F8;
+    /*border-color: yellow !important;*/
+    border: 1px solid #bbb;
+    /*border-color: #bbb !important;*/
+    /*border-color: #bbb;*/
 }
 
 #jovanka_ciares_site {
@@ -225,8 +245,8 @@ background-color: rgb(222, 203, 211);}
       /* background-color: rgb(143, 48, 88);*/
 
     font: 16px/1.5 "Avenir Next", Avenir, 'Lato', 'Nunito', "Helvetica Neue", Helvetica, Arial, sans-serif;
- 
-   
+
+
 color: #8F3058;
 }
 
@@ -254,7 +274,7 @@ color: #8F3058;
 #graphics {background-color: #9B9B9B;
 }
 
-#megha-link {color: #CF0074; font-size: .85em;} 
+#megha-link {color: #CF0074; font-size: .85em;}
 
 #btd-link {color: #8D6976; font-size: .85em;
 
@@ -270,7 +290,7 @@ color: #8F3058;
 #skills-style .icon {text-align: center; margin: 0 auto; width: 100%; display: inline-block;/* font-size: 1.1em;*/}
 
 #skillbox {text-align: center; /* width: 45%;*/}
-.resume-style{ 
+.resume-style{
 	padding: 1em;
     bottom-margin: 1em;
 }
@@ -302,6 +322,7 @@ div#work-style .full-width-container{ /*background-color: #36cfff;*/ background-
 
 /*contact section*/
 .contact-style {
+  background-image: url("../images/back-pattern.png");
 background-color: #f0f6f8;
 padding: 1em;
     padding-bottom: 0;
@@ -316,7 +337,9 @@ padding: 1em;
     background-color: #E8EBED;
 }
 .portfolio-contain .portfolio-row:nth-child(even){
+
     background-color: #F0F6F8;
+
 }
 /* resume headings h4 */
 h4 {margin-top: 1em;
@@ -379,7 +402,7 @@ vertical-align: middle;
 /* Smartphones (portrait and landscape) ----------- */
 
 /* Smartphones (portrait and landscape) ----------- */
-/*@media only screen 
+/*@media only screen
 and (min-device-width : 320px)
 and (max-device-width : 320px) {
 /* Styles */
