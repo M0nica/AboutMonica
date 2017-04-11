@@ -2,8 +2,12 @@
 @import url(http://fonts.googleapis.com/css?family=Nunito:400,300,700);
 
 * {box-sizing: border-box;}
-body {width: 100%; font: 16px/1.5 "Avenir Next", Avenir, 'Lato', 'Nunito', "Helvetica Neue", Helvetica, Arial, sans-serif;"Avenir Next", Avenir, "Helvetica Neue", Helvetica, Arial, sans-serif;}
+body {color: #141334; width: 100%; font: 16px/1.5 "Avenir Next", Avenir, 'Lato', 'Nunito', "Helvetica Neue", Helvetica, Arial, sans-serif;"Avenir Next", Avenir, "Helvetica Neue", Helvetica, Arial, sans-serif;}
 
+p#about-funfact {
+    padding: 2em;
+    background-color: #fcfcfc;
+}
 #About-Monica{ font-size: 2em; display:inline;
 font-family: "Avenir Next", Avenir, 'Lato', 'Nunito', "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -23,10 +27,10 @@ padding: 1em;
 #nav-mobile {display: none; }
 /*
 * Logo
-*/ 
+*/
 .logo a {
-    color: #0e8e8c; 
-    text-decoration: none; 
+    color: #0e8e8c;
+    text-decoration: none;
     line-height: 20px;
 left: 2em;}
 .logo a:hover {color: #444;}
@@ -46,7 +50,7 @@ ul.mainMenu li a:hover {color: #0e8e8c;
     transition: color .12s ease-in-out;
 }
 
-ul.mainMenu .social li a {font-size: 13px; color: #0e8e8c; text-decoration: none; 
+ul.mainMenu .social li a {font-size: 13px; color: #0e8e8c; text-decoration: none;
    }
 ul.mainMenu .social li a:hover {color: #444;
     -webkit-transition: color .12s ease-in-out;
@@ -59,15 +63,15 @@ ul.mainMenu .social li a:hover {color: #444;
 
 
 header nav, contactheader nav, wwmheader nav {
-    width: 100%; 
-    height: auto; 
+    width: 100%;
+    height: auto;
     float: left;
-    margin: 0;  
-    padding:15px 0 20px; 
+    margin: 0;
+    padding:15px 0 20px;
     background: #FDFDFD;
     /*border-top: 4px solid #37b7b5;*/
     border-bottom: 3px solid #37b7b5;
-    position: fixed; 
+    position: fixed;
     z-index: 7;
     box-shadow: 0 1px 2px 0 rgba(0,0,0,.3);
     -moz-box-shadow: 0 1px 2px 0 rgba(0,0,0,.3);
@@ -149,12 +153,12 @@ nav h3 {padding-top: 0; margin-top: 0; color: #333;}
     color: white;
     	z-index: 4;
     	/*background-color:#0e8e8c;*/
-    	} 
-    	
+    	}
+
     	#featured-in, .featured{
 width: 100%;
 text-align: center;}
- 
+
  .full-width-container {
 width: 100%;
 max-width: 100%;
@@ -225,8 +229,8 @@ background-color: rgb(222, 203, 211);}
       /* background-color: rgb(143, 48, 88);*/
 
     font: 16px/1.5 "Avenir Next", Avenir, 'Lato', 'Nunito', "Helvetica Neue", Helvetica, Arial, sans-serif;
- 
-   
+
+
 color: #8F3058;
 }
 
@@ -254,7 +258,7 @@ color: #8F3058;
 #graphics {background-color: #9B9B9B;
 }
 
-#megha-link {color: #CF0074; font-size: .85em;} 
+#megha-link {color: #CF0074; font-size: .85em;}
 
 #btd-link {color: #8D6976; font-size: .85em;
 
@@ -270,7 +274,7 @@ color: #8F3058;
 #skills-style .icon {text-align: center; margin: 0 auto; width: 100%; display: inline-block;/* font-size: 1.1em;*/}
 
 #skillbox {text-align: center; /* width: 45%;*/}
-.resume-style{ 
+.resume-style{
 	padding: 1em;
     bottom-margin: 1em;
 }
@@ -379,7 +383,7 @@ vertical-align: middle;
 /* Smartphones (portrait and landscape) ----------- */
 
 /* Smartphones (portrait and landscape) ----------- */
-/*@media only screen 
+/*@media only screen
 and (min-device-width : 320px)
 and (max-device-width : 320px) {
 /* Styles */
